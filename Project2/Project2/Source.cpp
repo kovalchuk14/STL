@@ -73,6 +73,15 @@ public:
 		}
 		return this->bin;
 	}
+	int* operator ^(Binary other)
+	{
+		for (int i = 0; (i < this->size && i < other.size); i++)
+		{
+			if (this->bin[i] == other.bin[i])this->bin[i] = 0;
+			else this->bin[i] = 1;
+		}
+		return this->bin;
+	}
 	int* operator &(Binary other)
 	{
 		for (int i = 0; (i < this->size&& i < other.size); i++)
@@ -101,6 +110,10 @@ void main()
 	//i|a;
 	//i&a;
 	//!i
-	//Binary(10).print();
+	//i^a;
 	//i.print();
+	//Binary(10).print();
+	//Binary(100&105).print();
+	//i.print();
+	
 }
