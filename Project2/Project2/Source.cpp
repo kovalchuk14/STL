@@ -19,24 +19,9 @@ public:
 	{
 		int i = 0;
 		for (; decimal; i++, decimal /= 2);
-		return decimal;
+		return i;
 	}
 	
-	int& init_bin(int Data)//вот мне нужна длинна для того что бы из 10 сделать 2
-	{
-		int mod;
-		size = capacity(Data);
-		bin = new int[size];
-		int i = 0;
-		while (Data)
-		{
-			mod = Data % 2;
-			Data /= 2;
-
-			bin[i] = mod;
-		}
-		
-	}
 	void print()
 	{
 		for (int i = 0; i < capacity(Data); i++)
@@ -47,11 +32,20 @@ public:
 	}
 	Binary(int Data) :Data(Data)
 	{
-		std::cout << "Constructor:\t" << std::endl;
+		int mod;
+		size = capacity(Data);
+		bin = new int[size];
+		for (int i = size; i; i--)
+		{
+			mod = Data % 2;
+			Data /= 2;
+			bin[i-1] = mod;
+		}
+		std::cout << "Constructor:\t" <<this<< std::endl;
 	}
 	~Binary()
 	{
-		std::cout << "Destructor:\t" << std::endl;
+		std::cout << "Destructor:\t" <<this<< std::endl;
 	}
 	bool operator==(Binary other)
 	{
@@ -61,33 +55,33 @@ public:
 	{
 		return !(this->Data == other.Data);
 	}
-	Binary operator !()
+	int* operator !()
 	{
 		for (int i = 0; i <	capacity(Data); i++)
 		{
 			if (bin[i])bin[i] = 0;
 			else bin[i] = 1;
-		}//ну тут легко меняю значение на противоположное 
-	
+		}
+		return bin;
 	}
-	Binary operator |(Binary other)
+	int* operator |(Binary other)
 	{
-		for (int i = 0; (i < this->capacity(Data) && i < other.capacity(Data)); i++)
+		for (int i = 0; (i < this->size && i < other.size); i++)
 		{
 			if (!this->bin[i] && !other.bin[i])this->bin[i]=0;
 			else this->bin[i] = 1;
 		}
-		
+		return this->bin;
 	}
-	Binary operator &(Binary other)
+	int* operator &(Binary other)
 	{
-		for (int i = 0; (i < this->capacity(Data) && i < other.capacity(Data)); i++)
+		for (int i = 0; (i < this->size&& i < other.size); i++)
 		{
 			if (this->bin[i] && other.bin[i])this->bin[i] = 1;
 			else this->bin[i] = 0;  
-			
-
 		}
+
+		return this->bin;
 	}
 	
 	
@@ -102,7 +96,11 @@ void main()
 {
 	setlocale(LC_ALL, " ");
 	Binary i = 100;
-	i.init_bin();
-	i.print();
-
+	Binary a = 105;
+	//a.print();
+	//i|a;
+	//i&a;
+	//!i
+	//Binary(10).print();
+	//i.print();
 }
